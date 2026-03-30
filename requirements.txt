@@ -1,0 +1,7 @@
+anthropic>=0.40,<1
+google-genai>=0.8,<2
+numpy>=1.26,<3
+openai>=1.0,<2
+pyarrow==17.0.0
+pytest>=7.0,<9
+streamlit>=1.32,<2
