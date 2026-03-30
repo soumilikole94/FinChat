@@ -5,7 +5,7 @@ FinChat is a small retrieval-grounded chat app for exploring the provided stock 
 This repository runs in two modes:
 
 - Out of the box, it works locally with the built-in retrieval and fallback summarizer. No API key is required.
-- Optional LLM mode can use OpenAI, Anthropic, Gemini, or an OpenAI-compatible endpoint if the user either adds their own API key in a local `.env` or pastes one into the sidebar for the current browser session.
+- Optional LLM mode can use OpenAI, Anthropic, Gemini, or an OpenAI-compatible endpoint if the user pastes a compatible API key into the sidebar.
 
 The main flow lives in `service.py`, with data cleanup in `data.py`, retrieval in `retrieval.py`, a thin orchestration layer in `answering.py`, provider integrations in `llm.py`, local summary logic in `local_summary.py`, and the Streamlit UI in `ui.py` plus `app.py`.
 
@@ -56,62 +56,15 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-3. Optional: enable provider-backed LLM synthesis.
-
-You have two choices:
-
-- Create a local `.env` file in the project root.
-- Or start the app in local mode and paste a key into the sidebar for that browser session only.
-
-If you want the `.env` route:
-
-```bash
-touch .env
-```
-
-Then add one of the following configurations to `.env`:
-
-OpenAI:
-
-```bash
-OPENAI_API_KEY=your_real_key_here
-OPENAI_MODEL=gpt-4o-mini
-```
-
-Anthropic:
-
-```bash
-ANTHROPIC_API_KEY=your_real_key_here
-ANTHROPIC_MODEL=claude-3-5-sonnet-latest
-```
-
-Gemini:
-
-```bash
-GEMINI_API_KEY=your_real_key_here
-GEMINI_MODEL=gemini-2.5-flash
-```
-
-Generic OpenAI-compatible endpoint:
-
-```bash
-LLM_PROVIDER=openai
-LLM_API_KEY=your_real_key_here
-LLM_MODEL=your_model_name_here
-LLM_BASE_URL=https://your-provider.example.com/v1
-```
-
-`src/finchat/constants.py` auto-loads `.env` at startup, and `.gitignore` excludes `.env` so your real key is not committed to GitHub.
-
-4. Run the app.
+3. Run the app.
 
 ```bash
 streamlit run app.py
 ```
 
-You can optionally paste an LLM API key into the app sidebar for that browser session only. Keys entered there stay in Streamlit session state and are not written to `.env` or committed to git.
+Optional: paste an LLM API key into the app sidebar to enable provider-backed synthesis. The key stays only in browser session state and is not stored in the repo.
 
-5. Run the tests.
+4. Run the tests.
 
 ```bash
 pytest
@@ -205,9 +158,3 @@ The tests cover the behaviors most likely to matter in review:
 - The dataset is bundled in the repo so reviewers can run it locally.
 - Chat history is in-memory only.
 - Retrieval quality matters more than styling for this assignment.
-
-## Secrets safety
-
-- Put your real LLM API key only in `.env` or the session-only sidebar input, never in source code.
-- `.env` is ignored by git, so it will not be uploaded when you push the repo.
-- If someone else clones the repo, they should create their own `.env` locally with their own key.
