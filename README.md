@@ -11,7 +11,7 @@ The main flow lives in `service.py`, with data cleanup in `data.py`, retrieval i
 
 ## Why this design
 
-This take-home is small enough that we do not need a separate hosted database, but large enough that plain keyword matching feels weak. The implementation aims for a middle ground:
+This assignment is small enough that we do not need a separate hosted database, but large enough that plain keyword matching feels weak. The implementation aims for a middle ground:
 
 - Keep the app self-contained and runnable locally.
 - Separate the chat UI from the data, retrieval, and answer-generation logic.
@@ -116,7 +116,7 @@ The app always retrieves local context first.
 - If a supported LLM key is set and the matching SDK is installed, the retrieved context is sent to that provider with strict instructions to answer only from those sources.
 - Otherwise, the app falls back to a deterministic local summarizer that selects the most relevant sentences from the retrieved contexts.
 
-Why it matters: the assignment allows either approach, so this supports both a strong local default and a more fluent optional LLM mode without assuming the reviewer has a specific vendor account.
+Why it matters: the assignment allows either approach, so this supports both a strong local default and a more fluent optional LLM mode without assuming the user has a specific vendor account.
 
 ### 6. Streamlit UI
 
@@ -127,7 +127,7 @@ The UI is intentionally thin:
 - a sidebar shows supported tickers and sample prompts
 - each answer includes a source list with links and excerpts
 
-Why it matters: the interview feedback said style is not the focus, so the UI stays functional and leaves most of the effort in the code quality and testability.
+Why it matters: Style is not the focus, so the UI stays functional and leaves most of the effort in the code quality and testability.
 
 ## Example prompts
 
@@ -141,7 +141,7 @@ Why it matters: the interview feedback said style is not the focus, so the UI st
 
 ## Testing strategy
 
-The tests cover the behaviors most likely to matter in review:
+The tests cover the behaviors most likely to matter:
 
 - loading and flattening the dataset correctly
 - removing boilerplate and deduplicating repeated wire items
